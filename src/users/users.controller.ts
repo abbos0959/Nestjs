@@ -1,3 +1,4 @@
+import { UpdateUserDto } from "./dtos/update-user.dto";
 import {
   Controller,
   Get,
@@ -20,11 +21,19 @@ export class UsersController {
     this.usersService.create(body.email, body.password);
   }
   @Get("/all")
-  AllUser() {
-    return this.usersService.allUser();
+  AllUser(@Query("email") email: string) {
+    return this.usersService.allUser(email);
   }
   @Get("/:id")
   findUser(@Param("id") id: string) {
     return this.usersService.findOneUser(parseInt(id));
+  }
+  @Delete("/:id")
+  deleteUser(@Param("id") id: string) {
+    return this.usersService.deleteUser(id);
+  }
+  @Patch("/:id")
+  UpdateUser(@Param("id") id: string, @Body() body: UpdateUserDto) {
+    return this.usersService.updateUser(parseInt(id), body);
   }
 }

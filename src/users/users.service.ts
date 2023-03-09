@@ -23,7 +23,7 @@ export class UsersService {
   async updateUser(id: number, sal: Partial<User>) {
     const user = await this.findOneUser(id);
     if (!user) {
-      throw new Error("bunday user mavjud emas");
+      throw new NotFoundException("bunday user mavjud emas");
     }
     Object.assign(user, sal);
     return this.repo.save(user);
@@ -35,7 +35,7 @@ export class UsersService {
     }
     return this.repo.remove(user);
   }
-  async allUser() {
-    return this.repo.find();
+  async allUser(email: string) {
+    return this.repo.find({ email });
   }
 }
